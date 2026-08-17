@@ -417,8 +417,19 @@ export class BaseAPI {
         return this.request('DELETE', `project/${projectId}/output`);
     }
 
-    async getFileFromClsi(identity: Identity, url: string, _compileGroup: string) {
+    async getFileFromClsi(
+        identity: Identity,
+        url: string,
+        compileGroup?: string,
+        clsiServerId?: string,
+    ) {
         url = url.replace(/^\/+/g, '');
+        const [route, rawQuery = ''] = url.split('?', 2);
+        const query = new URLSearchParams(rawQuery);
+        if (compileGroup) { query.set('compileGroup', compileGroup); }
+        if (clsiServerId) { query.set('clsiserverid', clsiServerId); }
+        const queryString = query.toString();
+        url = queryString ? `${route}?${queryString}` : route;
         this.setIdentity(identity);
         const content = await this.download(url);
         return {

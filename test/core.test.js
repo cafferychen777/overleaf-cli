@@ -44,6 +44,13 @@ class DownloadTestAPI extends BaseAPI {
   }
 }
 
+test('compiled CLI entrypoint is executable on POSIX', {
+  skip: process.platform === 'win32',
+}, () => {
+  const entrypoint = path.join(__dirname, '..', 'out', 'index.js');
+  assert.equal(fs.statSync(entrypoint).mode & 0o111, 0o111);
+});
+
 class FakeSocket {
   constructor() {
     this.handlers = new Map();
@@ -341,6 +348,41 @@ test('BaseAPI assembles validated HTTP byte ranges', async (t) => {
   const content = await api.downloadPublic('artifact');
   assert.equal(content.toString(), 'abcdef');
   assert.deepEqual(ranges, [undefined, 'bytes=3-']);
+});
+
+test('BaseAPI includes compile routing metadata when downloading CLSI output', async (t) => {
+  let requestedUrl;
+  const server = http.createServer((req, res) => {
+    requestedUrl = new URL(req.url, 'http://localhost');
+    if (
+      requestedUrl.searchParams.get('compileGroup') !== 'priority' ||
+      requestedUrl.searchParams.get('clsiserverid') !== 'clsi-node-1'
+    ) {
+      res.writeHead(404);
+      res.end();
+      return;
+    }
+    res.writeHead(200, { 'Content-Type': 'application/pdf' });
+    res.end('%PDF-test');
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise((resolve, reject) => {
+    server.close((error) => error ? reject(error) : resolve());
+  }));
+
+  const address = server.address();
+  const api = new BaseAPI(`http://127.0.0.1:${address.port}`);
+  const identity = { cookies: 'sid=test', csrfToken: 'csrf-token' };
+  const result = await api.getFileFromClsi(
+    identity,
+    '/project/project-1/build/build-1/output/output.pdf?existing=true',
+    'priority',
+    'clsi-node-1'
+  );
+
+  assert.equal(Buffer.from(result.content).toString(), '%PDF-test');
+  assert.equal(requestedUrl.pathname, '/project/project-1/build/build-1/output/output.pdf');
+  assert.equal(requestedUrl.searchParams.get('existing'), 'true');
 });
 
 test('BaseAPI rejects semantically failed upload responses', async (t) => {

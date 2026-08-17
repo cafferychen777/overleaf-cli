@@ -102,7 +102,8 @@ export interface ProjectPersist {
 
 export interface CompileResponseSchema {
     status: 'success' | 'failure' | 'error';
-    compileGroup: string;
+    compileGroup?: string;
+    clsiServerId?: string;
     outputFiles: Array<OutputFileEntity>;
     stats: {
         'latexmk-errors': number;

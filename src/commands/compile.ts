@@ -61,7 +61,12 @@ export async function compileProject(localDir: string, compiler?: Compiler) {
         // Download log for diagnostics
         const logOutput = selectPrimaryLogOutput(compile.outputFiles);
         if (logOutput) {
-            const logRes = await api.getFileFromClsi(identity, logOutput.url, compile.compileGroup);
+            const logRes = await api.getFileFromClsi(
+                identity,
+                logOutput.url,
+                compile.compileGroup,
+                compile.clsiServerId,
+            );
             if (logRes.type === 'success' && logRes.content) {
                 const logPath = resolveProjectPath(resolvedDir, 'output.log');
                 fs.writeFileSync(logPath, logRes.content);
@@ -85,7 +90,12 @@ export async function compileProject(localDir: string, compiler?: Compiler) {
     }
 
     logger.info('Downloading PDF...');
-    const pdfRes = await api.getFileFromClsi(identity, pdfOutput.url, compile.compileGroup);
+    const pdfRes = await api.getFileFromClsi(
+        identity,
+        pdfOutput.url,
+        compile.compileGroup,
+        compile.clsiServerId,
+    );
     if (pdfRes.type !== 'success' || !pdfRes.content) {
         throw new Error('Failed to download compiled PDF');
     }
