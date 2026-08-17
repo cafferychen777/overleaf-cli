@@ -1,5 +1,5 @@
 {
-  "name": "@cafferychen777/overleaf-cli",
+  "name": "overleaf-cli",
   "version": "0.1.0",
   "description": "Unofficial CLI for safe, bidirectional synchronization with Overleaf projects",
   "main": "out/index.js",
@@ -75,8 +75,5 @@
   "bugs": {
     "url": "https://github.com/cafferychen777/overleaf-cli/issues"
   },
-  "homepage": "https://github.com/cafferychen777/overleaf-cli#readme",
-  "publishConfig": {
-    "access": "public"
-  }
+  "homepage": "https://github.com/cafferychen777/overleaf-cli#readme"
 }

@@ -36,16 +36,7 @@ The executable is named `overleaf-cli` to describe its primary operation.
 - An Overleaf account, or access to a compatible self-hosted Overleaf instance
 - A POSIX-like shell for the credential examples below
 
-## Install
-
-### Install from npm
-
-```bash
-npm install -g @cafferychen777/overleaf-cli
-overleaf-cli --help
-```
-
-### Install from source
+## Install from source
 
 ```bash
 git clone https://github.com/cafferychen777/overleaf-cli.git
@@ -64,17 +55,8 @@ overleaf-cli --help
 ### Install the Codex skill
 
 This repository includes a companion Codex skill with command guidance,
-credential safeguards, conflict handling, and maintainer workflows. After an
-npm installation, install the bundled skill globally with:
-
-```bash
-package_root="$(npm root -g)/@cafferychen777/overleaf-cli"
-skill_root="${CODEX_HOME:-$HOME/.codex}/skills"
-mkdir -p "$skill_root"
-cp -R "$package_root/skills/overleaf-cli" "$skill_root/"
-```
-
-From a repository checkout, use:
+credential safeguards, conflict handling, and maintainer workflows. Install it
+globally from the repository checkout:
 
 ```bash
 skill_root="${CODEX_HOME:-$HOME/.codex}/skills"
