@@ -1,0 +1,4 @@
+interface:
+  display_name: "Overleaf CLI"
+  short_description: "Safely operate and troubleshoot Overleaf CLI"
+  default_prompt: "Use $overleaf-cli to safely sync this local project with Overleaf."

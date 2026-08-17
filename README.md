@@ -52,6 +52,30 @@ Then confirm the executable is available:
 overleaf-cli --help
 ```
 
+### Install the Codex skill
+
+This repository includes a companion Codex skill with command guidance,
+credential safeguards, conflict handling, and maintainer workflows. Install it
+globally from the repository checkout:
+
+```bash
+skill_root="${CODEX_HOME:-$HOME/.codex}/skills"
+mkdir -p "$skill_root"
+cp -R skills/overleaf-cli "$skill_root/"
+```
+
+To keep the skill scoped to one workspace instead, copy it to that workspace's
+`.agents/skills/` directory:
+
+```bash
+mkdir -p /path/to/workspace/.agents/skills
+cp -R skills/overleaf-cli /path/to/workspace/.agents/skills/
+```
+
+Invoke it as `$overleaf-cli` when asking Codex to synchronize, diagnose, or
+maintain this CLI. Restart Codex if the newly installed skill is not discovered
+in the current session.
+
 During development, `node out/index.js` can be used instead of the linked
 executable after running `npm run build`.
 
