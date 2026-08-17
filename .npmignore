@@ -1,0 +1,14 @@
+.github/
+test/
+coverage/
+*.tgz
+.env
+.env.*
+.npmrc
+.overleaf-cli.json
+.overleaf-cli-hashes.json
+.overleaf-cli-tracked.json
+.overleaf-cli-cache/
+.overleaf-cli-conflicts/
+.DS_Store
+npm-debug.log*

@@ -1,0 +1,78 @@
+{
+  "name": "overleaf-cli",
+  "version": "0.1.0",
+  "description": "Unofficial CLI for safe, bidirectional synchronization with Overleaf projects",
+  "main": "out/index.js",
+  "bin": {
+    "overleaf-cli": "out/index.js"
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('out', {recursive: true, force: true})\"",
+    "build": "npm run clean && tsc",
+    "test": "npm run build && node --test test/*.test.js",
+    "check": "npm audit --audit-level=high && npm test && npm pack --dry-run",
+    "watch": "tsc -w",
+    "postinstall": "node scripts/patch-socketio.js",
+    "prepack": "npm run postinstall && npm run build"
+  },
+  "files": [
+    "out",
+    "src",
+    "scripts",
+    "assets",
+    "README.md",
+    "SECURITY.md",
+    "NOTICE.md",
+    "LICENSE",
+    "tsconfig.json",
+    "package.json"
+  ],
+  "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "chokidar": "^3.6.0",
+    "diff-match-patch": "^1.0.5",
+    "form-data": "^4.0.6",
+    "mime-types": "^2.1.35",
+    "minimatch": "^9.0.9",
+    "node-fetch": "^2.7.0",
+    "socket.io-client": "github:overleaf/socket.io-client#0.9.17-overleaf-5",
+    "ws": "5.2.5"
+  },
+  "devDependencies": {
+    "@types/diff-match-patch": "^1.0.34",
+    "@types/node": "^20.0.0",
+    "@types/node-fetch": "^2.6.11",
+    "typescript": "^5.1.3"
+  },
+  "overrides": {
+    "brace-expansion": "2.1.4",
+    "picomatch": "2.3.2",
+    "socket.io-client": {
+      "ws": "5.2.5"
+    }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cafferychen777/overleaf-cli.git"
+  },
+  "keywords": [
+    "overleaf",
+    "latex",
+    "cli",
+    "sync",
+    "collaboration"
+  ],
+  "author": "Chen Yang",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cafferychen777/overleaf-cli/issues"
+  },
+  "homepage": "https://github.com/cafferychen777/overleaf-cli#readme"
+}

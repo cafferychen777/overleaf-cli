@@ -1,0 +1,26 @@
+node_modules/
+out/
+*.vsix
+
+# Local credentials and environment files
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local Overleaf project state
+.overleaf-cli.json
+.overleaf-cli-hashes.json
+.overleaf-cli-tracked.json
+.overleaf-cli-cache/
+.overleaf-cli-conflicts/
+
+# Generated and operating-system files
+coverage/
+*.tgz
+.DS_Store
+npm-debug.log*
